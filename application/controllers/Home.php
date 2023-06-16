@@ -70,4 +70,20 @@ class Home extends CI_Controller {
         }
     }
 
+    public function article_detail() {
+        if($this->session->userdata('id') != null){
+
+            $data['id']= $this->session->userdata('id');
+            $this->load->view('header', $data);
+            $this->load->view('article/article_detail', $data);
+
+        }else{
+
+            $data['id'] = null;
+            $this->load->view('header', $data);
+            $this->load->view('article/article_home', $data);
+
+        }
+    }
+
 }
