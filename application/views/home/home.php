@@ -14,7 +14,7 @@
                     <img src="http://localhost/madingonline/asset/design.png" alt="" class="d-inline-block">
                  </div>
                  <div class="col-4 text-center">
-                    <button type="submit" class="btn btn-dark tdark-bold text-white w-75 rounded-pill mt-4 text-center" style="height:48px;">Mulai&nbsp;&nbsp;<i class="fa-solid fa-chevron-right"></i></button>               
+                    <button type="submit" class="btn btn-dark tdark-bold text-white w-75 rounded-pill mt-4 text-center mulai" style="height:48px;">Mulai&nbsp;&nbsp;<i class="fa-solid fa-chevron-right"></i></button>               
                  </div>
             </div>
             
@@ -25,3 +25,11 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.mulai').on('click', function () {
+            location.href="<?=base_url()?>home/article";
+        });
+    });
+</script>

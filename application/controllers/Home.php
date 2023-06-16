@@ -16,13 +16,13 @@ class Home extends CI_Controller {
 
             $data['id']= $this->session->userdata('id');
             $this->load->view('header', $data);
-            $this->load->view('home', $data);
+            $this->load->view('home/home', $data);
 
         }else{
 
             $data['id'] = null;
             $this->load->view('header', $data);
-            $this->load->view('home', $data);
+            $this->load->view('home/home', $data);
 
         }
     }
@@ -38,9 +38,7 @@ class Home extends CI_Controller {
                     ->get('users')
                     ->result();
         if (empty($getUsers)){
-            echo "this";
-            echo $hashPassword;
-            echo false;
+            echo "true";
 
         }else{
             $this->session->set_userdata('id', $getUsers[0]->id);
@@ -54,6 +52,22 @@ class Home extends CI_Controller {
         session_destroy();
         return redirect('/');
 
+    }
+
+    public function article() {
+        if($this->session->userdata('id') != null){
+
+            $data['id']= $this->session->userdata('id');
+            $this->load->view('header', $data);
+            $this->load->view('article/article_home', $data);
+
+        }else{
+
+            $data['id'] = null;
+            $this->load->view('header', $data);
+            $this->load->view('article/article_home', $data);
+
+        }
     }
 
 }
