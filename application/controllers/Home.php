@@ -55,6 +55,8 @@ class Home extends CI_Controller {
     }
 
     public function article() {
+            
+            $data['article'] = $this->db->query("SELECT * FROM artikel")->result_array();
         if($this->session->userdata('id') != null){
 
             $data['id']= $this->session->userdata('id');
@@ -70,7 +72,9 @@ class Home extends CI_Controller {
         }
     }
 
-    public function article_detail() {
+    public function article_detail($id) {
+        $data['article'] = $this->db->query("SELECT * FROM artikel where id='$id'")->result_array();
+        
         if($this->session->userdata('id') != null){
 
             $data['id']= $this->session->userdata('id');
@@ -81,8 +85,65 @@ class Home extends CI_Controller {
 
             $data['id'] = null;
             $this->load->view('header', $data);
-            $this->load->view('article/article_home', $data);
+            $this->load->view('article/article_detail', $data);
 
+        }
+    }
+
+    public function laporan() {
+        if($this->session->userdata('id') != null){
+
+            $data['id']= $this->session->userdata('id');
+            $this->load->view('header', $data);
+            $this->load->view('laporan/laporan_home', $data);
+
+        }else{
+            $data['id'] = null;
+            $this->load->view('header', $data);
+            $this->load->view('laporan/laporan_home', $data);
+
+        }
+    }
+
+    public function inputArticle() {
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('judul', 'Judul', 'required|max_length[30]');
+        $this->form_validation->set_rules('konten', 'Konten', 'required');
+        $this->form_validation->set_rules('image', 'Image');
+
+        if($this->form_validation->run() === TRUE) {
+            $id= $this->session->userdata('id');
+            $input = $this->input->post();
+            $judul = $input['judul'];
+            $konten = $input['konten'];
+            $currentTime = date("Y-m-d H:i:s");
+
+            $config['upload_path'] = 'upload/post';
+            $config['allowed_types'] = 'jpg|png|jpeg';
+            $config['max_size'] = '100000';
+            $config['file_ext_tolower'] = true;
+            
+            $this->load->library('upload', $config);
+            
+            if ($this->upload->do_upload('image')) {
+                $filename = $this->upload->data('file_name');
+                $this->db->query("INSERT INTO artikel(image, judul, content) VALUES('$filename','$judul', '$konten')");
+                
+            }else{
+                $this->db->query("INSERT INTO artikel(judul, content) VALUES('$judul', '$konten')");
+              
+            }
+
+            if($this->db->affected_rows() != 1){
+                $this->session->set_flashdata('warning', "Tambah data artikel gagal!");
+            }else{
+                $this->session->set_flashdata('success', "Tambah data artikel berhasil!");
+
+            }
+            redirect('/home/article');
+        
         }
     }
 
