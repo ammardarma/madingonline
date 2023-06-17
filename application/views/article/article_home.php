@@ -19,7 +19,8 @@
             ARTIKEL
         </h3>
     </div>
-    <?php if($article != null){
+    <?php  if($article != null){
+           $dataContent = explode(".", $article[0]['content']); 
         ?>
     <div class="container mb-5">
         <div class="row">
@@ -28,9 +29,9 @@
                     <?=$article[0]['judul']?>
                 </h4>
                 <p style="font-size: 16px; text-align:justify;">
-                    <?=$article[0]['content']?>
+                   <?=$dataContent[0] . '.' ?>
                 </p>
-                <a href="#" class="btn btn-sm w-25 btn-outline-secondary border-2 rounded-pill">Lihat Selengkapnya</a>
+                <a href="<?=base_url(). "home/article_detail/". $article[0]['id']?>" class="btn btn-sm w-25 btn-outline-secondary border-2 rounded-pill">Lihat Selengkapnya</a>
 
             </div>
             <div class="col-6 text-end">
@@ -38,6 +39,7 @@
             </div>
         </div>
         <?php if(count($article) > 1){
+             $dataContent2 = explode(".", $article[1]['content']); 
             ?>
         <div class="row mt-5">
             <div class="col-6">
@@ -46,9 +48,9 @@
         <div class="col-6">
                 <h4 class="fw-bold"><?=$article[1]['judul']?></h4>
                 <p style="font-size: 16px; text-align:justify;">
-                  <?=$article[1]['content']?>
+                    <?=$dataContent2[0] . '.'?>
                 </p>
-                <a href="#" class="btn btn-sm w-25 btn-outline-secondary border-2 rounded-pill">Lihat Selengkapnya</a>
+                <a href="<?=base_url(). "home/article_detail/". $article[1]['id']?>" class="btn btn-sm w-25 btn-outline-secondary border-2 rounded-pill">Lihat Selengkapnya</a>
             </div>
         </div>
         <?php
@@ -71,7 +73,7 @@
                     <div class="card-body">
                         <h5 class="card-title fw-bold"><?=$article[$i]['judul']?></h5>
                         <p class="card-text" style="font-size: 16px; text-align:justify;"><?=$data[0]?>.</p>
-                        <a href="#" class="btn btn-sm w-15 btn-outline-secondary border-2 rounded-pill">Lihat Selengkapnya</a>
+                        <a href="<?=base_url(). "home/article_detail/". $article[$i]['id']?>" class="btn btn-sm w-15 btn-outline-secondary border-2 rounded-pill">Lihat Selengkapnya</a>
                     </div>
                 </div>
             </div>

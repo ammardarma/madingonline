@@ -10,11 +10,13 @@
         <div class="row">
             <div class="card border border-dark border-2" style="border-radius:1rem">
                 <div class="card-body">
+                <?php if($article != null){?>
+                    <?php for($i=0; $i <count($article); $i++): ?>
                     <div class= "my-3 card border border-2 border-dark" style="border-radius:1rem">
                         <div class="card-header bg-white" style="border-radius:1rem">
                             <div class="row justify-content-center">
                                 <div class="col">
-                                    <p class="fw-bold mt-2">Judul Artikel Yang Akan Muncul Nanti</p>
+                                    <p class="fw-bold mt-2"><?=$article[$i]['judul']?></p>
                                 </div>
                                 <div class="col text-end" data-bs-toggle="modal" data-bs-target="#HapusArtikel">
                                     <button class="btn">
@@ -23,7 +25,18 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="mx-3 mt-2" style="font-size: 14px; text-align:justify;">Komentar (13)</p>
+                        <?php $dataCount = 0;?>
+                        <?php foreach($komentar as $data){
+                            if ($data['artikel_id']== $article[$i]['id']){
+                                $dataCount = $dataCount+1;
+                                }
+                        }
+                        ?>
+                        <p class="mx-3 mt-2" style="font-size: 14px; text-align:justify;">Komentar (<?=$dataCount?>)</p>
+                    </div>
+            <?php endfor;?>
+
+                    <?php } ?>
                     </div>
                 </div>
             </div>
